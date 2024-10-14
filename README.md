@@ -1,4 +1,4 @@
-# MSA Spring Boot Practice
+# Practice MSA
 
 > 이 프로젝트는 **Spring Boot**를 사용하여 **MSA** 구성 연습을 위한 프로젝트 입니다.
 
