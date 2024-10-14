@@ -6,5 +6,5 @@ spring:
     name: discoveryservice
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: false # Eureka Server ? ??? ???? ??
+    fetch-registry: false # Eureka Server??? ?????? ???? ??
