@@ -12,6 +12,10 @@ import reactor.core.publisher.Mono;
 @Component
 public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Config> {
 
+    public CustomFilter() {
+        super(Config.class);  // Config 클래스를 지정하여 필터를 초기화
+    }
+
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
@@ -25,10 +29,6 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
                         log.info("Custom POST filter: response code -> {}", response.getStatusCode());
                     }));
         };
-    }
-
-    public CustomFilter() {
-        super(Config.class);  // Config 클래스를 지정하여 필터를 초기화
     }
 
     public static class Config {
