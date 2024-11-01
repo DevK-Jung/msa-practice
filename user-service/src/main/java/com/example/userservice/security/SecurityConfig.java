@@ -18,7 +18,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers("/users/**").permitAll())
+//                        authorize.requestMatchers("/users/**").permitAll())
+                        authorize.requestMatchers("/**").permitAll())
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
         return http.build();
