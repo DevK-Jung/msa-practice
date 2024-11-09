@@ -8,6 +8,7 @@ import org.bouncycastle.math.raw.Mod;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Iterable<OrderEntity> getOrdersByUserId(String userId) {
+    public List<OrderEntity> getOrdersByUserId(String userId) {
         return orderRepository.findByUserId(userId);
     }
 }
