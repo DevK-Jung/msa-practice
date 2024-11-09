@@ -37,6 +37,8 @@ public class OrderController {
 
         OrderDto orderDto = modelMapper.map(requestOrder, OrderDto.class);
 
+        orderDto.setUserId(userId);
+
         OrderDto createOrder = orderService.createOrder(orderDto);
 
         ResponseOrder responseOrder = modelMapper.map(createOrder, ResponseOrder.class);

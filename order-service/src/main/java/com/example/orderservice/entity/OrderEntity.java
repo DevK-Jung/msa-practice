@@ -1,13 +1,18 @@
 package com.example.orderservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
 public class OrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +32,6 @@ public class OrderEntity implements Serializable {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDate createAt;
+    private LocalDateTime createAt;
 
 }
