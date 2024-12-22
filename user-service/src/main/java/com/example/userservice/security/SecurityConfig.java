@@ -20,9 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserService userService;
+//    private final UserService userService;
 
-    private final Environment env;
+//    private final Environment env;
 
 
     @Bean
@@ -54,9 +54,15 @@ public class SecurityConfig {
     }
 
 
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+//        return auth.build();
+//    }
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-        return auth.build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
+
 }
