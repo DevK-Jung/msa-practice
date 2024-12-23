@@ -35,3 +35,7 @@ eureka:
 
 greeting:
   message: Welcome !!
+
+logging:
+  level:
+    com.example.userservice: DEBUG
