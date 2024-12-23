@@ -20,9 +20,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final UserService userService;
+    private final UserService userService;
 
-//    private final Environment env;
+    private final Environment env;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
 
     @Bean
@@ -42,27 +44,22 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationFilter authenticationFilter(AuthenticationConfiguration authConfig) throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        AuthenticationFilter authenticationFilter =
+                new AuthenticationFilter(authConfig.getAuthenticationManager(), userService, env);
         authenticationFilter.setAuthenticationManager(authConfig.getAuthenticationManager()); // AuthenticationManager 설정
 
         return authenticationFilter;
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 
 //    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-//        return auth.build();
+//    public void configureAuthenticationManager(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
 //    }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+//        return authConfig.getAuthenticationManager();
+//    }
 
 }
