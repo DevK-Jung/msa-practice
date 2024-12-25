@@ -8,4 +8,6 @@ spring:
     config:
       server:
         git:
-          uri: file:////Users/kimjunghyeon/Desktop/workspace/git-local-repo
+          uri: https://github.com/DevK-Jung/spring-cloud-config.git
+          username: ${gitUsername}
+          password: ${gitPassword}
