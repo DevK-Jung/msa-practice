@@ -24,8 +24,6 @@ public class SecurityConfig {
 
     private final Environment env;
 
-    private final BCryptPasswordEncoder passwordEncoder;
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationFilter authenticationFilter) throws Exception {
@@ -35,7 +33,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
 //                        authorize.requestMatchers("/users/**").permitAll())
-                        authorize.requestMatchers("/**").permitAll())
+                                authorize
+                                        .requestMatchers("/actuator/**").permitAll()
+                                        .requestMatchers("/**").permitAll()
+                )
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .addFilter(authenticationFilter);
 

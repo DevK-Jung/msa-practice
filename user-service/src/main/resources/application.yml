@@ -40,6 +40,8 @@ logging:
   level:
     com.example.userservice: DEBUG
 
-token:
-  expiration_time: 86400000
-  secret: R8n9rpDN1Q6LJgD2LIC0uqAZEFCiPKeBudPTU10cDPU=
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, beans, refresh # config service 정보 refresh
