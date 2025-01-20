@@ -10,9 +10,14 @@ eureka:
 spring:
   application:
     name: apigateway-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   cloud:
-#    discovery:
-#      enabled: false
+    #    discovery:
+    #      enabled: false
     gateway:
       default-filters:
         - name: GlobalFilter
@@ -100,4 +105,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace
+        include: refresh, health, beans, httptrace, bus-refresh

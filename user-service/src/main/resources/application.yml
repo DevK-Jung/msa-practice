@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: user-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   h2:
     console:
       enabled: true
@@ -44,4 +49,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, beans, refresh # config service 정보 refresh
+        include: health, beans, refresh, bus-refresh # config service 정보 refresh

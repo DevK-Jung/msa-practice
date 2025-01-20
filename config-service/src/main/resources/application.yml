@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: config-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   profiles:
     active: native
   cloud:
@@ -15,3 +20,8 @@ spring:
           uri: https://github.com/DevK-Jung/spring-cloud-config.git
           username: ${gitUsername}
           password: ${gitPassword}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, bus-refresh
