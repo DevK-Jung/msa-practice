@@ -6,15 +6,19 @@ import com.example.userservice.repository.UserRepository;
 import com.example.userservice.vo.ResponseOrder;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -27,6 +31,10 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     private final BCryptPasswordEncoder passwordEncoder;
+
+    private final RestClient restClient;
+
+    private final Environment environment;
 
 
     @Override
@@ -57,7 +65,17 @@ public class UserServiceImpl implements UserService {
 
         UserDto userDto = modelMapper.map(userEntity, UserDto.class);
 
-        List<ResponseOrder> orders = new ArrayList<>();
+//        List<ResponseOrder> orders = new ArrayList<>();
+        String orderUri = environment.getProperty("order_service.uri");
+
+        Objects.requireNonNull(orderUri);
+
+        List<ResponseOrder> orders = restClient.get()
+                .uri(orderUri, userId)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+
         userDto.setOrders(orders);
 
         return userDto;
