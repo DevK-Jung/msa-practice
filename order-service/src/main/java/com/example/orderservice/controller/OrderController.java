@@ -2,6 +2,7 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.OrderEntity;
+import com.example.orderservice.messageQueue.KafkaProducer;
 import com.example.orderservice.service.OrderService;
 import com.example.orderservice.vo.RequestOrder;
 import com.example.orderservice.vo.ResponseOrder;
@@ -26,6 +27,8 @@ public class OrderController {
 
     private final ModelMapper modelMapper;
 
+    private final KafkaProducer kafkaProducer;
+
     @GetMapping("/health_check")
     public String status() {
         return String.format("It's Working in Order Service on PORT %s", env.getProperty("local.server.port"));
@@ -42,6 +45,8 @@ public class OrderController {
         OrderDto createOrder = orderService.createOrder(orderDto);
 
         ResponseOrder responseOrder = modelMapper.map(createOrder, ResponseOrder.class);
+
+        kafkaProducer.send("example-catalog-topic", orderDto);
 
         return new ResponseEntity<>(responseOrder, HttpStatus.CREATED);
     }
