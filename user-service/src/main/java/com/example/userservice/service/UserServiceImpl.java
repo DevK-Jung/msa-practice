@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
         List<ResponseOrder> order = orderServiceClient.getOrder(userId);
 
         userDto.setOrders(order);
+        
 
         return userDto;
     }
