@@ -7,6 +7,8 @@ import com.example.userservice.repository.UserRepository;
 import com.example.userservice.vo.ResponseOrder;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     private final OrderServiceClient orderServiceClient;
+
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
 //    private final RestTemplate restTemplate;
 //
@@ -71,10 +75,13 @@ public class UserServiceImpl implements UserService {
 //        ResponseEntity<List<ResponseOrder>> ordersEntity = restTemplate.exchange(orderUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<ResponseOrder>>() {
 //        });
 
-        List<ResponseOrder> order = orderServiceClient.getOrder(userId);
+//        List<ResponseOrder> order = orderServiceClient.getOrder(userId);
 
-        userDto.setOrders(order);
-        
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitBreaker");
+        List<ResponseOrder> orderList = circuitBreaker.run(() -> orderServiceClient.getOrder(userId),
+                throwable -> new ArrayList<>());
+
+        userDto.setOrders(orderList);
 
         return userDto;
     }

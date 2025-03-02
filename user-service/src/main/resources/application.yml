@@ -52,3 +52,4 @@ management:
     web:
       exposure:
         include: health, beans, refresh, bus-refresh # config service 정보 refresh
+
