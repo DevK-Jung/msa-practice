@@ -4,12 +4,14 @@ import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.OrderEntity;
 import com.example.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -40,6 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderEntity> getOrdersByUserId(String userId) {
+        log.info("before getOrdersByUserId");
         return orderRepository.findByUserId(userId);
     }
 }
